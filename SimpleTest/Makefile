@@ -1,4 +1,4 @@
-TARGET := SimpleTest
+TARGET := kSimpleTest
 PWD := $(shell pwd)
 KERNEL := $(shell uname -r)
 
