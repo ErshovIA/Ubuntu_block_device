@@ -5,7 +5,7 @@ MODULE_LICENSE("Dual MIT/GPL");
 
 //////////////////////////// INIT ////////////////////////////////
 
-module_init(test_drv_init);
+module_init(BlockDeviceInit);
 
 static int __init BlockDeviceInit(void)
 {
@@ -37,7 +37,7 @@ static int __init BlockDeviceInit(void)
     DeviceGenDisk->minors = 1;
     DeviceGenDisk->fops = &BlockDeviceFunctions;
 
-    DeviceGenDisk->flags = GENHD_FL_NO_PART_SCAN;
+    DeviceGenDisk->flags = GENHD_FL_NO_PART;
     strcpy(DeviceGenDisk->disk_name, DEVICE_NAME"0");
     set_capacity(DeviceGenDisk ,1024*512);
 
@@ -56,7 +56,7 @@ static int __init BlockDeviceInit(void)
 	return 0;
 }
 
-module_exit(test_drv_exit);
+module_exit(BlockDeviceExit);
 
 static void __exit BlockDeviceExit(void)
 {

@@ -5,7 +5,7 @@
 #include <linux/slab.h>
 #include <linux/fs.h>
 #include <linux/blkdev.h>
-#include <linux/malloc.h>
+//#include <linux/malloc.h>
 #include "block_drv_ioctl.h"
 
 
