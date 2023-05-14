@@ -95,31 +95,38 @@ static int BlockDeviceIOCTL(struct block_device* Device, fmode_t Mode, unsigned 
         //////// FROM DRIVER TO USER ///////////////
             case IOCTL_BLK_GET:
                 DBG_MSG("IOCTL_BLK_GET\n");
-                // memset(Data->CopiedToUserData, 0, CopiedToUserLength);
-                int length = DeviceDataLength > Data->CopiedToUserLength ? Data->CopiedToUserLength : DeviceDataLength;
-                copy_to_user(Data->CopiedToUserData, DeviceBuffer, length);
+                {
+                	// memset(Data->CopiedToUserData, 0, CopiedToUserLength);
+                	int length = DeviceDataLength > Data->CopiedToUserLength ? Data->CopiedToUserLength : DeviceDataLength;
+                	copy_to_user(Data->CopiedToUserData, DeviceBuffer, length);
+                }
+                
             break;
 
         //////// FROM USER TO DRIVER ///////////////
             case IOCTL_BLK_SET:
                 DBG_MSG("IOCTL_BLK_SET\n");
-                memset(DeviceBuffer, 0, DEVICE_BUFFER_SIZE);
-                int length = DEVICE_BUFFER_SIZE > Data->CopiedFromUserLength ? Data->CopiedFromUserLength : DEVICE_BUFFER_SIZE;
-                copy_from_user(DeviceBuffer, Data->CopiedFromUserData, length);
-                DeviceDataLength = length;
+                {
+                	memset(DeviceBuffer, 0, DEVICE_BUFFER_SIZE);
+                	int length = DEVICE_BUFFER_SIZE > Data->CopiedFromUserLength ? Data->CopiedFromUserLength : DEVICE_BUFFER_SIZE;
+                	copy_from_user(DeviceBuffer, Data->CopiedFromUserData, length);
+                	DeviceDataLength = length;
+                }
             break;
 
         //////// FROM DRIVER TO USER THEN FROM USER TO DRIVER ///////////////
             case IOCTL_BLK_GET_AND_SET:
                 DBG_MSG("IOCTL_BLK_GET_AND_SET\n");
-                ////////// FROM DRIVER TO USER //////////
-                int length = DeviceDataLength > Data->CopiedToUserLength ? Data->CopiedToUserLength : DeviceDataLength;
-                copy_to_user(Data->CopiedToUserData, DeviceBuffer, length);
-                ////////// FROM USER TO DRIVER //////////
-                memset(DeviceBuffer, 0, DEVICE_BUFFER_SIZE);
-                length = DEVICE_BUFFER_SIZE > Data->CopiedFromUserLength ? Data->CopiedFromUserLength : DEVICE_BUFFER_SIZE;
-                copy_from_user(DeviceBuffer, Data->CopiedFromUserData, length);
-                DeviceDataLength = length;
+                {
+		        ////////// FROM DRIVER TO USER //////////
+		        int length = DeviceDataLength > Data->CopiedToUserLength ? Data->CopiedToUserLength : DeviceDataLength;
+		        copy_to_user(Data->CopiedToUserData, DeviceBuffer, length);
+		        ////////// FROM USER TO DRIVER //////////
+		        memset(DeviceBuffer, 0, DEVICE_BUFFER_SIZE);
+		        length = DEVICE_BUFFER_SIZE > Data->CopiedFromUserLength ? Data->CopiedFromUserLength : DEVICE_BUFFER_SIZE;
+		        copy_from_user(DeviceBuffer, Data->CopiedFromUserData, length);
+		        DeviceDataLength = length;
+                }
             break;
 
         //////// FROM DRIVER TO USER ///////////////
