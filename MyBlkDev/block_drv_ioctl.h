@@ -1,0 +1,14 @@
+#include <linux/ioctl.h>
+
+
+#define DRV_MAGIC 0xB2
+
+#define DRV_GET 0x70
+#define DRV_SET 0x71
+#define DRV_GET_AND_SET 0x72
+#define DRV_DBG_MESSAGE 0x73
+
+#define IOCTL_DRV_GET _IOR(DRV_MAGIC, DRV_GET, char*)
+#define IOCTL_DRV_SET _IOW(DRV_MAGIC, DRV_SET, char*) 
+#define IOCTL_DRV_GET_AND_SET _IOWR(DRV_MAGIC, DRV_GET_AND_SET, char*)
+#define IOCTL_DRV_DBG_MESSAGE _IO(DRV_MAGIC, DRV_DBG_MESSAGE) 
